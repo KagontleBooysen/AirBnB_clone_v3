@@ -41,6 +41,20 @@ def add_state():
     if 'name' not in data:
         abort(400, description="Missing name")
     state = State(**data)
-    # print("=============================================state: ", state.id)
     state.save()
     return jsonify(state.to_dict()), 201
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def update_state(state_id):
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    if not request.is_json:
+        abort(400, description="Not a JSON")
+    data = request.get_json()
+    for key, value in data.items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(state, key, value)
+    state.save()
+    return jsonify(state.to_dict()), 200
