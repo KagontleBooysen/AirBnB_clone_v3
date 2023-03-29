@@ -34,20 +34,21 @@ class BaseModel:
 
         # if keyword argument is provided initialize class with the specified
         # values
-        if kwargs != {}:
-            for key, val in kwargs.items():
-                if key == '__class__':
-                    continue
-                if (key == 'created_at' and type(val) == str):
-                    # val = datetime.fromisoformat(val)
-                    # the above .fromisoformat() method does
-                    # not work in python 3.4
-                    # print(type(val))
-                    # print("val: ", val)
-                    val = datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')
-                if (key == 'updated_at' and type(val) == str):
-                    val = datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')
-                self.__setattr__(key, val)
+        time = "%Y-%m-%dT%H:%M:%S.%f"
+        if kwargs:
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    setattr(self, key, value)
+            if kwargs.get("created_at", None) and type(self.created_at) is str:
+                self.created_at = datetime.strptime(kwargs["created_at"], time)
+            else:
+                self.created_at = datetime.utcnow()
+            if kwargs.get("updated_at", None) and type(self.updated_at) is str:
+                self.updated_at = datetime.strptime(kwargs["updated_at"], time)
+            else:
+                self.updated_at = datetime.utcnow()
+            if kwargs.get("id", None) is None:
+                self.id = str(uuid.uuid4())
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
