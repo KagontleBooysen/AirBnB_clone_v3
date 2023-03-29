@@ -166,8 +166,6 @@ class HBNBCommand(cmd.Cmd):
     def help_clear(self):
         print("Clear command to clear the screen")
 
-    # commands to handle BaseModel
-
     def do_create(self, args):
 
         # split the args to get the class name

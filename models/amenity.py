@@ -3,13 +3,19 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import models
 
 
 class Amenity(BaseModel, Base):
 
     """Amenity class to store amenity information"""
 
-    __tablename__ = "amenities"
+    if models.storage_type == 'db':
+        __tablename__ = 'amenities'
+        name = Column(String(128), nullable=False)
+    else:
+        name = ""
 
-    name = Column(String(128), nullable=False)
-    place_amenities = relationship("Place", secondary="place_amenity")
+    def __init__(self, *args, **kwargs):
+        """initializes Amenity"""
+        super().__init__(*args, **kwargs)

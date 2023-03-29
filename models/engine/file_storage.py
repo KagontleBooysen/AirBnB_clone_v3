@@ -14,7 +14,12 @@ from models.state import State
 
 
 class FileStorage:
+    """ File storage class that serializes
+    instances to a JSON file and deserializes. JSON file to instances.
 
+    Returns:
+        _type_: _description_
+    """
     # private class attributes
     # __file_path is the path to the JSON file to store all objects.
     __file_path = 'storage.json'
@@ -88,4 +93,5 @@ class FileStorage:
                     self.save()
 
     def close(self):
+        "Deserialize the JSON file to __objects"
         self.reload()

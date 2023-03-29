@@ -14,13 +14,18 @@ from models.base_model import Base
 
 
 class DBStorage:
+    """ Database storage class that will manage the database.
 
+    Returns:
+        _type_: _description_
+    """
     # private class attributes
     __engine = None
     __session = None
 
     def __init__(self):
-
+        """ Intialize the database storage
+        """
         # get environment variables
         user = os.getenv('HBNB_MYSQL_USER')
         passwd = os.getenv('HBNB_MYSQL_PWD')
@@ -80,4 +85,6 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
+        """ call close() method on the class Session
+        """
         self.__session.close()

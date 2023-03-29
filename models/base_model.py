@@ -7,24 +7,27 @@ import uuid
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
+
 # print format of create_engine
 # 'mysql+mysqldb://<username>:<password>@<host>:<port>/<db_name>'
 # connect with the mysql database
 
-Base = declarative_base()
-
-storage_type = 'HBNB_TYPE_STORAGE'
+# Base = declarative_base()
+if models.storage_type == "db":
+    Base = declarative_base()
+else:
+    Base = object
 
 
 class BaseModel:
     """Base class for all common attributes and methods"""
-
-    id = Column(String(60), primary_key=True, nullable=False,
-                default=str(uuid.uuid4()))
-    created_at = Column(DateTime, nullable=False,
-                        default=datetime.utcnow())
-    updated_at = Column(DateTime, nullable=False,
-                        default=datetime.utcnow())
+    if models.storage_type == "db":
+        id = Column(String(60), primary_key=True, nullable=False,
+                    default=str(uuid.uuid4()))
+        created_at = Column(DateTime, nullable=False,
+                            default=datetime.utcnow())
+        updated_at = Column(DateTime, nullable=False,
+                            default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Initialize BaseModel"""

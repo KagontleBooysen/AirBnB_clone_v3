@@ -15,9 +15,9 @@ class State(BaseModel, Base):
     Attributes:
         name: input name
     """
-    storage = getenv('HBNB_TYPE_STORAGE')
-    __tablename__ = "states"
-    if storage == 'db':
+
+    if models.storage_type == 'db':
+        __tablename__ = "states"
         name = Column(String(128), nullable=False)
         cities = relationship("City", cascade='all, delete, delete-orphan',
                               backref="state")
@@ -28,7 +28,7 @@ class State(BaseModel, Base):
         """initializes state"""
         super().__init__(*args, **kwargs)
 
-    if storage != "db":
+    if models.storage_type != "db":
         @property
         def cities(self):
             """getter for list of city instances related to the state"""

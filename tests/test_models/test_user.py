@@ -5,6 +5,7 @@ Contains the TestUserDocs classes
 
 from datetime import datetime
 import inspect
+import os
 import models
 from models import user
 from models.base_model import BaseModel
@@ -59,6 +60,7 @@ class TestUserDocs(unittest.TestCase):
 
 class TestUser(unittest.TestCase):
     """Test the User class"""
+
     def test_is_subclass(self):
         """Test that User is a subclass of BaseModel"""
         user = User()
@@ -71,7 +73,7 @@ class TestUser(unittest.TestCase):
         """Test that User has attr email, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "email"))
-        if models.storage_t == 'db':
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
             self.assertEqual(user.email, None)
         else:
             self.assertEqual(user.email, "")
@@ -80,7 +82,7 @@ class TestUser(unittest.TestCase):
         """Test that User has attr password, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "password"))
-        if models.storage_t == 'db':
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
             self.assertEqual(user.password, None)
         else:
             self.assertEqual(user.password, "")
@@ -89,7 +91,7 @@ class TestUser(unittest.TestCase):
         """Test that User has attr first_name, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "first_name"))
-        if models.storage_t == 'db':
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
             self.assertEqual(user.first_name, None)
         else:
             self.assertEqual(user.first_name, "")
@@ -98,7 +100,7 @@ class TestUser(unittest.TestCase):
         """Test that User has attr last_name, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "last_name"))
-        if models.storage_t == 'db':
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
             self.assertEqual(user.last_name, None)
         else:
             self.assertEqual(user.last_name, "")
@@ -130,3 +132,7 @@ class TestUser(unittest.TestCase):
         user = User()
         string = "[User] ({}) {}".format(user.id, user.__dict__)
         self.assertEqual(string, str(user))
+
+
+if __name__ == "__main__":
+    unittest.main()
