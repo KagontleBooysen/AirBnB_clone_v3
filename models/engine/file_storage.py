@@ -40,7 +40,7 @@ class FileStorage:
         if cls is not None:
 
             obj = {}
-            print(FileStorage.__objects.items())
+            # print(FileStorage.__objects.items())
             for key, val in FileStorage.__objects.items():
                 if cls.__name__ in key:
                     obj[key] = val
@@ -95,3 +95,17 @@ class FileStorage:
     def close(self):
         "Deserialize the JSON file to __objects"
         self.reload()
+
+    def get(self, cls, id):
+        """Retrieve one object"""
+        if cls is not None and id is not None:
+            # first change cls to string
+            key = cls.__name__ + '.' + id
+            return FileStorage.__objects.get(key)
+        return None
+
+    def count(self, cls=None):
+        """Count the number of objects in storage"""
+        if cls is not None:
+            return len(self.all(cls))
+        return len(FileStorage.__objects)
