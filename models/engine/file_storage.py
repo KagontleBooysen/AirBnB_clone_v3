@@ -40,7 +40,7 @@ class FileStorage:
         if cls is not None:
 
             obj = {}
-            print(FileStorage.__objects.items())
+            # print(FileStorage.__objects.items())
             for key, val in FileStorage.__objects.items():
                 if cls.__name__ in key:
                     obj[key] = val
@@ -99,7 +99,8 @@ class FileStorage:
     def get(self, cls, id):
         """Retrieve one object"""
         if cls is not None and id is not None:
-            key = cls + '.' + id
+            # first change cls to string
+            key = cls.__name__ + '.' + id
             return FileStorage.__objects.get(key)
         return None
 
