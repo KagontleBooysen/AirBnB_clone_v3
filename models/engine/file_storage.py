@@ -28,7 +28,8 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """Returns a list of all objects if cls is None. If cls is provided, return all objects of that type.
+        """Returns a list of all objects if cls is None.
+        If cls is provided, return all objects of that type.
         """
 
         if cls is not None:
@@ -85,6 +86,6 @@ class FileStorage:
                     del FileStorage.__objects[key]
                     print("Deleted: {}".format(key))
                     self.save()
-                    
+
     def close(self):
         self.reload()
