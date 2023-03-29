@@ -38,10 +38,15 @@ class BaseModel:
             for key, val in kwargs.items():
                 if key == '__class__':
                     continue
-                if key == 'created_at' or key == 'updated_at':
-                    val = datetime.fromisoformat(val)
-                # elif key == 'updated_at':
-                #     val = datetime.fromisoformat(val)
+                if (key == 'created_at' and type(val) == str):
+                    # val = datetime.fromisoformat(val)
+                    # the above .fromisoformat() method does
+                    # not work in python 3.4
+                    # print(type(val))
+                    # print("val: ", val)
+                    val = datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')
+                if (key == 'updated_at' and type(val) == str):
+                    val = datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')
                 self.__setattr__(key, val)
         else:
             self.id = str(uuid.uuid4())
