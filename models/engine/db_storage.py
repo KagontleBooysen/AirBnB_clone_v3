@@ -92,7 +92,7 @@ class DBStorage:
     def get(self, cls, id):
         """ Retrieves one object """
         if cls and id:
-            key = cls + '.' + id
+            key = cls.__name__ + '.' + id
             return self.all(cls).get(key)
         return None
 
