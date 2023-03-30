@@ -57,7 +57,8 @@ def add_city():
     return jsonify(city.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def add_city_to_state(state_id):
     """Add A state"""
     state = storage.get(State, state_id)
