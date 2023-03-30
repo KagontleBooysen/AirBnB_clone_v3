@@ -27,7 +27,14 @@ def cities_by_state(state_id):
 
 @app_views.route('/cities/<city_id>', strict_slashes=False)
 def get_city(city_id):
-    """Return a state"""
+    """ Return a city by id
+
+    Args:
+        city_id (str): city id
+
+    Returns:
+        city: json representation of the city
+    """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -44,17 +51,17 @@ def delete_city(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('/cities', methods=['POST'], strict_slashes=False)
-def add_city():
-    """Add A state"""
-    if not request.is_json:
-        abort(400, description="Not a JSON")
-    data = request.get_json()
-    if 'name' not in data:
-        abort(400, description="Missing name")
-    city = City(**data)
-    city.save()
-    return jsonify(city.to_dict()), 201
+# @app_views.route('/cities', methods=['POST'], strict_slashes=False)
+# def add_city():
+#     """Add A state"""
+#     if not request.is_json:
+#         abort(400, description="Not a JSON")
+#     data = request.get_json()
+#     if 'name' not in data:
+#         abort(400, description="Missing name")
+#     city = City(**data)
+#     city.save()
+#     return jsonify(city.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>/cities',

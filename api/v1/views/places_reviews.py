@@ -9,7 +9,7 @@ from models.user import User
 from models.review import Review
 
 
-@app_views.route('/place/<place_id>/reviews', strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False)
 def reviews_by_place(place_id):
     """Return all reviews for a place"""
     place = storage.get(Place, place_id)
@@ -46,7 +46,7 @@ def delete_review(review_id):
     return jsonify({}), 200
 
 
-@app_views.route('/place/<place_id>/reviews', methods=['POST'],
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def add_review(place_id):
     """Add review to a place
