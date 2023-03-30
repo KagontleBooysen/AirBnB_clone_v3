@@ -17,9 +17,10 @@ def reviews_by_place(place_id):
         abort(404)
     # This next line of code needs improvement as it's not memory efficient
     # ? Why? Because it's getting all the reviews from the database
-    reviews = storage.all(Review).values()
+    # * it should get only the reviews for this place
+    # reviews = storage.all(Review).values()
     # The above line of code can be improved by using the following line
-    # * reviews = place.reviews
+    reviews = place.reviews
     # get only the reviews for this place
     # reviews = [review for review in place.reviews]
     return jsonify([review.to_dict()
