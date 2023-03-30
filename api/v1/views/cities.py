@@ -3,7 +3,8 @@
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
-from models.state import City
+from models.city import City
+from models.state import State
 
 
 @app_views.route('/cities', strict_slashes=False)
@@ -11,6 +12,17 @@ def cities():
     """Return all states"""
     cities = storage.all(City).values()
     return jsonify([city.to_dict() for city in cities])
+
+
+@app_views.route('/states/<state_id>/cities', strict_slashes=False)
+def cities_by_state(state_id):
+    """Return all states"""
+    cities = storage.all(City).values()
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    cities = [city.to_dict() for city in cities if city.state_id == state_id]
+    return jsonify(cities), 200
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False)
@@ -41,6 +53,23 @@ def add_city():
     if 'name' not in data:
         abort(400, description="Missing name")
     city = City(**data)
+    city.save()
+    return jsonify(city.to_dict()), 201
+
+
+@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+def add_city_to_state(state_id):
+    """Add A state"""
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    if not request.is_json:
+        abort(400, description="Not a JSON")
+    data = request.get_json()
+    if 'name' not in data:
+        abort(400, description="Missing name")
+    city = City(**data)
+    city.state_id = state_id
     city.save()
     return jsonify(city.to_dict()), 201
 
