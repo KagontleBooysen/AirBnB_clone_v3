@@ -85,6 +85,7 @@ def update_review(review_id):
     """
     review = storage.get(Review, review_id)
     if review is None:
+        # print(review)
         abort(404)
     if not request.is_json:
         abort(400, description="Not a JSON")
@@ -92,3 +93,5 @@ def update_review(review_id):
     for key, value in data.items():
         if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
             setattr(review, key, value)
+    review.save()
+    return jsonify(review.to_dict()), 200
