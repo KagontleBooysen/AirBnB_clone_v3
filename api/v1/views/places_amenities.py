@@ -52,3 +52,26 @@ def delete_amenity(place_id, amenity_id):
     return jsonify({}), 200
 
 
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['POST'])
+def link_amenity_to_place(place_id, amenity_id):
+    """ Link an amenity to a place
+
+    Args:
+        place_id (str): id of the place to link the amenity to
+        amenity_id (str): id of the amenity to link
+
+    Returns:
+        amenity : amenity linked to the place
+    """
+    place = storage.get(Place, place_id)
+    if place is None:
+        abort(404)
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
+        abort(404)
+    if amenity in place.amenities:
+        return jsonify(amenity.to_dict()), 200
+    place.amenities.append(amenity)
+    storage.save()
+    return jsonify(amenity.to_dict()), 201
