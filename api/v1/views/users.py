@@ -38,6 +38,7 @@ def add_user():
     """Add A state"""
     if not request.is_json:
         abort(400, description="Not a JSON")
+
     data = request.get_json()
     if 'name' not in data:
         abort(400, description="Missing name")
@@ -47,6 +48,7 @@ def add_user():
         abort(400, description="Missing password")
     user = User(**data)
     user.save()
+
     return jsonify(user.to_dict()), 201
 
 
