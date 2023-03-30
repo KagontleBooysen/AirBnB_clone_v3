@@ -28,7 +28,8 @@ def get_place(place_id):
     return jsonify(place.to_dict()), 200
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_place(place_id):
     """Delete state"""
     place = storage.get(Place, place_id)
@@ -38,7 +39,8 @@ def delete_place(place_id):
     return jsonify({}), 200
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
 def add_place(city_id):
     """Add place to a city
     body of the request must be a JSON object containing name and user_id
@@ -48,7 +50,7 @@ def add_place(city_id):
     Returns:
         place: place added
     """
-    
+
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
