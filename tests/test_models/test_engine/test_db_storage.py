@@ -3,21 +3,18 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
-from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
 import pep8
 import unittest
+from models import storage
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -86,3 +83,32 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDbStorage(unittest.TestCase):
+    """ Test the DBStorage class
+
+    Args:
+        unittest (_type_): _description_
+    """
+
+    def test_get_db(self):
+        """ Tests method for obtaining an instance db storage"""
+        data = {"name": "California"}
+        state = State(**data)
+        storage.new(state)
+        storage.save()
+        get_instance = storage.get(State, state.id)
+        self.assertEqual(get_instance, state)
+
+    def test_count(self):
+        """ Tests count method db storage """
+        data = {"name": "Amhara"}
+        state = State(**data)
+        storage.new(state)
+        data = {"name": "Bahir Dar", "state_id": state.id}
+        city = City(**data)
+        storage.new(city)
+        storage.save()
+        c = storage.count()
+        self.assertEqual(len(storage.all()), c)
