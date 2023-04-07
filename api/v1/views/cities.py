@@ -68,6 +68,7 @@ def delete_city(city_id):
                  methods=['POST'], strict_slashes=False)
 def add_city_to_state(state_id):
     """Add A state"""
+    
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
