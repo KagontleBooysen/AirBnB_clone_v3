@@ -4,8 +4,6 @@ from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
 from models.place import Place
-from models.city import City
-from models.user import User
 from models.amenity import Amenity
 
 
@@ -22,7 +20,12 @@ def get_amenities(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    amenities = place.amenities
+    amenity_ids = place.amenities  # list of amenity ids
+    amenities = []
+    for amenity_id in amenity_ids:
+        amenity = storage.get(Amenity, amenity_id)
+        amenities.append(amenity)
+
     return jsonify([amenity.to_dict()
                     for amenity in amenities]), 200
 
