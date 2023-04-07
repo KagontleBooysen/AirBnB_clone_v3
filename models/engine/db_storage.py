@@ -13,6 +13,9 @@ from models.user import User
 from models.base_model import Base
 import models
 
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
 
 class DBStorage:
     """ Database storage class that will manage the database.
@@ -100,6 +103,17 @@ class DBStorage:
 
     def count(self, cls=None):
         """ Counts the number of objects in storage """
-        if cls:
-            return len(models.storage.all(cls).items())
-        return len(models.storage.all().items())
+        # if cls:
+        #     return len(models.storage.all(cls).items())
+        # return len(models.storage.all().items())
+
+        all_class = classes.values()
+
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
+        else:
+            count = len(models.storage.all(cls).values())
+
+        return count

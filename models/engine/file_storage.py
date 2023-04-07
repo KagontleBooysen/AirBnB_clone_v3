@@ -13,6 +13,9 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
 
 class FileStorage:
     """ File storage class that serializes
@@ -107,6 +110,17 @@ class FileStorage:
 
     def count(self, cls=None):
         """ Counts the number of objects in storage """
-        if cls:
-            return len(models.storage.all(cls).items())
-        return len(models.storage.all().items())
+        # if cls:
+        #     return len(models.storage.all(cls).items())
+        # return len(models.storage.all().items())
+
+        all_class = classes.values()
+
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
+        else:
+            count = len(models.storage.all(cls).values())
+
+        return count
