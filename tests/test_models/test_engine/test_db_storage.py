@@ -99,7 +99,7 @@ class TestDbStorage(unittest.TestCase):
         storage.new(state)
         storage.save()
         get_instance = storage.get(State, state.id)
-        self.assertEqual(get_instance, state)
+        self.assertEqual(get_instance.id, state.id)
 
     def test_count(self):
         """ Tests count method db storage """

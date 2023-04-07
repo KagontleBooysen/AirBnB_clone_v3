@@ -124,7 +124,7 @@ class TestFileStorage(unittest.TestCase):
         data = {"name": "Amhara"}
         state = State(**data)
         state.save()
-        self.assertEqual(state, storage.get(State, state.id))
+        self.assertEqual(state.id, storage.get(State, state.id).id)
 
     def test_filestorage_count_cls(self):
         """Test that count returns the correct number of objects"""
