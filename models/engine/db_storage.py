@@ -11,6 +11,7 @@ from models.state import State
 from models.city import City
 from models.user import User
 from models.base_model import Base
+import models
 
 
 class DBStorage:
@@ -100,5 +101,5 @@ class DBStorage:
     def count(self, cls=None):
         """ Counts the number of objects in storage """
         if cls:
-            return len(self.all(cls).items())
-        return len(self.all().items())
+            return len(models.storage.all(cls).items())
+        return len(models.storage.all().items())

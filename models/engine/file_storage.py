@@ -4,6 +4,7 @@ JSON file to instances"""
 
 import json
 import os
+import models
 from models.base_model import BaseModel
 from models.user import User
 from models.amenity import Amenity
@@ -107,5 +108,5 @@ class FileStorage:
     def count(self, cls=None):
         """ Counts the number of objects in storage """
         if cls:
-            return len(self.all(cls).items())
-        return len(self.all().items())
+            return len(models.storage.all(cls).items())
+        return len(models.storage.all().items())
