@@ -10,6 +10,11 @@ ALU-AirBnB is a full-stack Web application built from scratch which comprize a c
 - A comprehensive database to manage the backend functionalities
 - An API that provides a communication interface between the front and backend of the system.
 
+## Installation
+* Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
+* Access AirBnb directory: `cd AirBnB_clone`
+* Run hbnb(interactively): `./console` and enter command
+* Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
 ## Project Architecture
 
@@ -17,15 +22,17 @@ The project is divided into different pieces. Here is a diagram of the project a
 
 ![Project Architecture](./project_architecture.png)
 
-## Files and Directories
-- [```models```](./models/) directory will contain all classes used for the entire project. A class, called “model” in a OOP project is the representation of an object/instance.
-- [```tests```](./tests) directory will contain all unit tests.
-- [```console.py```](./console.py) file is the entry point of the command interpreter.
-- [```models/base_model.py```](./models/base_model.py) file is the base class of all models. It contains common elements:
-    - attributes: ```id```, ```created_at``` and ```updated_at```
-    - methods: ```save()``` and ```to_json()```
-- [```models/engine```](./models/engine/) directory contains all storage classes (using the same prototype). Currently it contains: ```file_storage.py``` file.
-
+## File Descriptions
+[console.py](console.py) - the console contains the entry point of the command interpreter. 
+List of commands this console current supports:
+* `EOF` - exits console 
+* `quit` - exits console
+* `<emptyline>` - overwrites default emptyline method and does nothing
+* `create` - Creates a new instance of`BaseModel`, saves it (to the JSON file) and prints the id
+* `destroy` - Deletes an instance based on the class name and id (save the change into the JSON file). 
+* `show` - Prints the string representation of an instance based on the class name and id.
+* `all` - Prints all string representation of all instances based or not on the class name. 
+* `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). 
 
 ## Description of the command interpreter
 | Commands  | Description |
@@ -79,3 +86,6 @@ $ python3 -m unittest tests/test_models/test_base_model.py
 
 * [**Wubeshet Yimam** ](https://github.com/wubeshetA)
 * [**Moussa Kalam AMZAT** ](https://github.com/Moussa-Kalam)
+
+## License
+Public Domain. No copy write protection. 
